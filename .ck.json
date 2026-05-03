@@ -1,0 +1,16 @@
+{
+  "$schema": "./.github/schemas/ck-config.schema.json",
+  "codingLevel": 2,
+  "project": {
+    "type": "api",
+    "framework": "nestjs",
+    "packageManager": "npm"
+  },
+  "docs": {
+    "maxLoc": 800
+  },
+  "paths": {
+    "docs": "docs",
+    "plans": "plans"
+  }
+}
