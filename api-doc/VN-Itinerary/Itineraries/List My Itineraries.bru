@@ -1,0 +1,20 @@
+meta {
+  name: List My Itineraries
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/v1/me/itineraries
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~page: 1
+  ~limit: 10
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

@@ -1,0 +1,19 @@
+meta {
+  name: Publish Itinerary
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{baseUrl}}/v1/itineraries/:id/publish
+  body: none
+  auth: bearer
+}
+
+params:path {
+  id: 
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

@@ -1,0 +1,47 @@
+meta {
+  name: Create Itinerary
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/v1/itineraries
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "title": "3 Days in Da Nang",
+    "description": "A wonderful trip to Da Nang",
+    "region": "Da Nang",
+    "duration": "3 days",
+    "duration_days": 3,
+    "thumbnail_url": "https://example.com/danang.jpg",
+    "estimated_price_cents": 5000,
+    "currency": "USD",
+    "tags": ["beach", "food", "relaxation"],
+    "days": [
+      {
+        "day_number": 1,
+        "theme": "Arrival and Beach",
+        "order_index": 0,
+        "activities": [
+          {
+            "title": "Breakfast at Bread Basket",
+            "description": "Best bread in town",
+            "time_session": "morning",
+            "order_index": 0,
+            "location_name": "Bread Basket",
+            "estimated_cost": 50000,
+            "currency": "VND"
+          }
+        ]
+      }
+    ]
+  }
+}

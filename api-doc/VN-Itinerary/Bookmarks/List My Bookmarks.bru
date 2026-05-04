@@ -1,0 +1,20 @@
+meta {
+  name: List My Bookmarks
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/v1/me/bookmarks
+  body: none
+  auth: bearer
+}
+
+params:query {
+  ~page: 1
+  ~limit: 10
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

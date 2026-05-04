@@ -1,0 +1,19 @@
+meta {
+  name: Archive Itinerary
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{baseUrl}}/v1/itineraries/:id/archive
+  body: none
+  auth: bearer
+}
+
+params:path {
+  id: 
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
