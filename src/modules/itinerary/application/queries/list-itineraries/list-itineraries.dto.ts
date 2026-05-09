@@ -1,13 +1,8 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
-
-export const AuthorSchema = z.object({
-  displayName: z.string(),
-  avatarUrl: z.string().nullable(),
-});
+import { createZodDto } from "nestjs-zod";
+import { z } from "zod";
 
 export const ExploreItineraryItemSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   title: z.string(),
   slug: z.string(),
   duration: z.string(),
@@ -18,7 +13,6 @@ export const ExploreItineraryItemSchema = z.object({
   thumbnailUrl: z.string().nullable(),
   region: z.string(),
   tags: z.array(z.string()),
-  author: AuthorSchema,
 });
 
 export const ListItinerariesResponseSchema = z.object({
@@ -26,4 +20,6 @@ export const ListItinerariesResponseSchema = z.object({
   total: z.number(),
 });
 
-export class ListItinerariesResponse extends createZodDto(ListItinerariesResponseSchema) {}
+export class ListItinerariesResponse extends createZodDto(
+  ListItinerariesResponseSchema,
+) {}

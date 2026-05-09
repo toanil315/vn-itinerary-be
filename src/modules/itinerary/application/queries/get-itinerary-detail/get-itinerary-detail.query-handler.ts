@@ -1,12 +1,12 @@
-import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { GetItineraryDetailQuery } from './get-itinerary-detail.query';
-import { Result } from '@/common/domain/result';
-import { ItineraryDetailResponse } from './get-itinerary-detail.dto';
-import { Inject } from '@nestjs/common';
-import { DATABASE_TOKEN } from '@/common/database/database.provider';
-import type { Database } from '@/common/database/database';
-import { ItineraryErrors } from '../../../domain/itinerary.errors';
-import { ConfigService } from '@nestjs/config';
+import { IQueryHandler, QueryHandler } from "@nestjs/cqrs";
+import { GetItineraryDetailQuery } from "./get-itinerary-detail.query";
+import { Result } from "@/common/domain/result";
+import { ItineraryDetailResponse } from "./get-itinerary-detail.dto";
+import { Inject } from "@nestjs/common";
+import { DATABASE_TOKEN } from "@/common/database/database.provider";
+import type { Database } from "@/common/database/database";
+import { ItineraryErrors } from "../../../domain/itinerary.errors";
+import { ConfigService } from "@nestjs/config";
 
 @QueryHandler(GetItineraryDetailQuery)
 export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItineraryDetailQuery> {
@@ -15,34 +15,30 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
     private readonly configService: ConfigService,
   ) {}
 
-  async execute(query: GetItineraryDetailQuery): Promise<Result<ItineraryDetailResponse>> {
+  async execute(
+    query: GetItineraryDetailQuery,
+  ): Promise<Result<ItineraryDetailResponse>> {
     const { slug } = query;
 
     const itinerary = await this.db
-      .selectFrom('itineraries')
-      .innerJoin('users', 'users.id', 'itineraries.user_id')
+      .selectFrom("itineraries")
       .select([
-        'itineraries.id',
-        'itineraries.title',
-        'itineraries.slug',
-        'itineraries.description',
-        'itineraries.region',
-        'itineraries.duration',
-        'itineraries.thumbnail_url',
-        'itineraries.estimated_price_cents',
-        'itineraries.currency',
-        'itineraries.avg_rating',
-        'itineraries.view_count',
-        'itineraries.like_count',
-        'itineraries.created_at',
-        'users.display_name',
-        'users.username',
-        'users.avatar_url',
-        'users.bio',
-        'users.is_verified',
+        "itineraries.id",
+        "itineraries.title",
+        "itineraries.slug",
+        "itineraries.description",
+        "itineraries.region",
+        "itineraries.duration",
+        "itineraries.thumbnail_url",
+        "itineraries.estimated_price_cents",
+        "itineraries.currency",
+        "itineraries.avg_rating",
+        "itineraries.view_count",
+        "itineraries.like_count",
+        "itineraries.created_at",
       ])
-      .where('itineraries.slug', '=', slug)
-      .where('itineraries.status', '=', 'published')
+      .where("itineraries.slug", "=", slug)
+      .where("itineraries.status", "=", "published")
       .executeTakeFirst();
 
     if (!itinerary) {
@@ -50,36 +46,38 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
     }
 
     const days = await this.db
-      .selectFrom('itinerary_days')
+      .selectFrom("itinerary_days")
       .selectAll()
-      .where('itinerary_id', '=', itinerary.id)
-      .orderBy('day_index', 'asc')
+      .where("itinerary_id", "=", itinerary.id)
+      .orderBy("day_index", "asc")
       .execute();
 
-    const dayIds = days.map(d => d.id);
-    const activities = dayIds.length > 0 
-      ? await this.db
-          .selectFrom('activities')
-          .selectAll()
-          .where('itinerary_day_id', 'in', dayIds)
-          .orderBy('order_index', 'asc')
-          .execute()
-      : [];
+    const dayIds = days.map((d) => d.id);
+    const activities =
+      dayIds.length > 0
+        ? await this.db
+            .selectFrom("activities")
+            .selectAll()
+            .where("itinerary_day_id", "in", dayIds)
+            .orderBy("order_index", "asc")
+            .execute()
+        : [];
     const activityIds = activities.map((activity) => activity.id);
-    const activityImages = activityIds.length > 0
-      ? await this.db
-          .selectFrom('activity_images')
-          .selectAll()
-          .where('activity_id', 'in', activityIds)
-          .orderBy('display_order', 'asc')
-          .execute()
-      : [];
+    const activityImages =
+      activityIds.length > 0
+        ? await this.db
+            .selectFrom("activity_images")
+            .selectAll()
+            .where("activity_id", "in", activityIds)
+            .orderBy("display_order", "asc")
+            .execute()
+        : [];
 
     const tags = await this.db
-      .selectFrom('itinerary_tags')
-      .innerJoin('tags', 'tags.id', 'itinerary_tags.tag_id')
-      .select('tags.name')
-      .where('itinerary_id', '=', itinerary.id)
+      .selectFrom("itinerary_tags")
+      .innerJoin("tags", "tags.id", "itinerary_tags.tag_id")
+      .select("tags.name")
+      .where("itinerary_id", "=", itinerary.id)
       .execute();
 
     return Result.success({
@@ -88,29 +86,23 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
       slug: itinerary.slug,
       description: itinerary.description,
       region: itinerary.region,
-      duration: itinerary.duration || '',
+      duration: itinerary.duration || "",
       thumbnailUrl: itinerary.thumbnail_url,
       estimatedPriceCents: itinerary.estimated_price_cents,
-      currency: itinerary.currency || 'USD',
+      currency: itinerary.currency || "USD",
       avgRating: Number(itinerary.avg_rating),
       viewCount: itinerary.view_count,
       likeCount: itinerary.like_count,
       createdAt: itinerary.created_at.toISOString(),
-      tags: tags.map(t => t.name),
-      author: {
-        displayName: itinerary.display_name,
-        username: itinerary.username,
-        avatarUrl: itinerary.avatar_url,
-        bio: itinerary.bio,
-        isVerified: !!itinerary.is_verified,
-      },
-      days: days.map(day => ({
+      tags: tags.map((t) => t.name),
+
+      days: days.map((day) => ({
         id: day.id,
         dayNumber: day.day_index,
         theme: day.theme,
         activities: activities
-          .filter(a => a.itinerary_day_id === day.id)
-          .map(a => ({
+          .filter((a) => a.itinerary_day_id === day.id)
+          .map((a) => ({
             id: a.id,
             title: a.title,
             description: a.description,
@@ -119,7 +111,7 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
             locationName: a.location_name,
             locationAddress: a.location_address,
             estimatedCost: Number(a.estimated_cost),
-            currency: a.currency || 'VND',
+            currency: a.currency || "VND",
             costDisplay: a.cost_display,
             mapLink: a.map_link,
             categoryTag: a.category_tag,
@@ -138,11 +130,11 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
   }
 
   private toImageUrl(objectKey: string): string | null {
-    const publicBaseUrl = this.configService.get<string>('R2_PUBLIC_BASE_URL');
+    const publicBaseUrl = this.configService.get<string>("R2_PUBLIC_BASE_URL");
     if (!publicBaseUrl) {
       return null;
     }
 
-    return `${publicBaseUrl.replace(/\/$/, '')}/${objectKey}`;
+    return `${publicBaseUrl.replace(/\/$/, "")}/${objectKey}`;
   }
 }

@@ -36,23 +36,9 @@ export class ItineraryController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @ApiOperation({ summary: "Create Itinerary Draft (supports activities[].images[])" })
-  @ApiResponse({
-    description: "Itinerary draft created successfully",
-    type: CreateItineraryResponseDto,
+  @ApiOperation({
+    summary: "Update Itinerary Draft (supports activities[].images[])",
   })
-  @RequirePermission(PermissionKeys.ITINERARY_CREATE)
-  @Post("v1/itineraries")
-  async create(
-    @CurrentUser() user: AuthenticatedUser,
-    @Body() dto: CreateItineraryDto,
-  ) {
-    return this.commandBus.execute(
-      new CreateItineraryCommand(user.userId, dto),
-    );
-  }
-
-  @ApiOperation({ summary: "Update Itinerary Draft (supports activities[].images[])" })
   @ApiResponse({
     description: "Itinerary draft updated successfully",
     type: EmptyResponse,

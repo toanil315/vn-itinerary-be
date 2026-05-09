@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query, Req } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, Query, Req } from "@nestjs/common";
 import { QueryBus, CommandBus } from "@nestjs/cqrs";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Public } from "@/modules/auth/public";
@@ -14,6 +14,11 @@ import { ListItinerariesResponse } from "../application/queries/list-itineraries
 import { ItineraryDetailResponse } from "../application/queries/get-itinerary-detail/get-itinerary-detail.dto";
 import { LeaderboardResponse } from "../application/queries/get-leaderboard/get-leaderboard.dto";
 import { EmptyResponse } from "@/common/http/empty-response.dto";
+import {
+  CreateItineraryDto,
+  CreateItineraryResponseDto,
+} from "../application/commands/create-itinerary/create-itinerary.dto";
+import { CreateItineraryCommand } from "../application/commands/create-itinerary/create-itinerary.command";
 
 @ApiTags("Public Itineraries")
 @Controller()
@@ -39,6 +44,19 @@ export class PublicItineraryController {
     return this.queryBus.execute(
       new ListItinerariesQuery(page, limit, region, tag),
     );
+  }
+
+  @ApiOperation({
+    summary: "Create Itinerary Draft (supports activities[].images[])",
+  })
+  @ApiResponse({
+    description: "Itinerary draft created successfully",
+    type: CreateItineraryResponseDto,
+  })
+  @Public()
+  @Post("v1/itineraries")
+  async create(@Body() dto: CreateItineraryDto) {
+    return this.commandBus.execute(new CreateItineraryCommand(dto));
   }
 
   @ApiOperation({ summary: "Get Trending Itineraries" })

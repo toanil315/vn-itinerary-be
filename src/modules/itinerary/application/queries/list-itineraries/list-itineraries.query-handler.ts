@@ -19,7 +19,6 @@ export class ListItinerariesQueryHandler implements IQueryHandler<ListItinerarie
 
     let baseQuery = this.db
       .selectFrom("itineraries")
-      .innerJoin("users", "users.id", "itineraries.user_id")
       .where("itineraries.status", "=", "published");
 
     if (region) {
@@ -49,8 +48,6 @@ export class ListItinerariesQueryHandler implements IQueryHandler<ListItinerarie
         "itineraries.view_count",
         "itineraries.thumbnail_url",
         "itineraries.region",
-        "users.display_name as author_display_name",
-        "users.avatar_url as author_avatar_url",
       ])
       .orderBy("itineraries.published_at", "desc")
       .limit(limit)
@@ -83,10 +80,6 @@ export class ListItinerariesQueryHandler implements IQueryHandler<ListItinerarie
       viewCount: item.view_count,
       thumbnailUrl: item.thumbnail_url,
       region: item.region,
-      author: {
-        displayName: item.author_display_name,
-        avatarUrl: item.author_avatar_url,
-      },
       tags: tagsResult
         .filter((t) => t.itinerary_id === item.id)
         .map((t) => t.name),

@@ -41,10 +41,13 @@ export interface Activities {
 export interface ActivityImages {
   activity_id: string;
   caption: string | null;
+  content_type: string | null;
   created_at: Generated<Timestamp>;
   display_order: number;
   id: Generated<string>;
-  url: string;
+  object_key: string;
+  size_bytes: number | null;
+  upload_session_id: string | null;
 }
 
 export interface Bookmarks {
@@ -58,8 +61,7 @@ export interface Itineraries {
   created_at: Generated<Timestamp>;
   currency: Generated<string | null>;
   description: string | null;
-  duration: string | null;
-  duration_days: number;
+  duration: string;
   estimated_price_cents: number | null;
   id: Generated<string>;
   is_featured: Generated<boolean>;
@@ -71,7 +73,7 @@ export interface Itineraries {
   thumbnail_url: string | null;
   title: string;
   updated_at: Generated<Timestamp>;
-  user_id: string;
+  user_id: string | null;
   view_count: Generated<number>;
 }
 
@@ -107,6 +109,25 @@ export interface Tags {
   slug: string;
 }
 
+export interface UploadSessions {
+  bucket: string;
+  confirmed_at: Timestamp | null;
+  consumed_at: Timestamp | null;
+  content_type: string;
+  created_at: Generated<Timestamp>;
+  expires_at: Timestamp;
+  id: Generated<string>;
+  idempotency_key: string | null;
+  max_size_bytes: number;
+  object_key: string;
+  request_fingerprint: string | null;
+  size_bytes: number | null;
+  status: string;
+  updated_at: Generated<Timestamp>;
+  uploaded_at: Timestamp | null;
+  user_id: string;
+}
+
 export interface Users {
   avatar_url: string | null;
   bio: string | null;
@@ -131,5 +152,6 @@ export interface DB {
   itinerary_tags: ItineraryTags;
   itinerary_views: ItineraryViews;
   tags: Tags;
+  upload_sessions: UploadSessions;
   users: Users;
 }

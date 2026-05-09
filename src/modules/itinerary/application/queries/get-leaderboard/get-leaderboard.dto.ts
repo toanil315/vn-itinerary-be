@@ -1,5 +1,5 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
+import { createZodDto } from "nestjs-zod";
+import { z } from "zod";
 
 export const LeaderboardAuthorSchema = z.object({
   displayName: z.string(),
@@ -13,11 +13,12 @@ export const LeaderboardItemSchema = z.object({
   slug: z.string(),
   thumbnailUrl: z.string().nullable(),
   viewCount: z.number(),
-  author: LeaderboardAuthorSchema,
 });
 
 export const LeaderboardResponseSchema = z.object({
   items: z.array(LeaderboardItemSchema),
 });
 
-export class LeaderboardResponse extends createZodDto(LeaderboardResponseSchema) {}
+export class LeaderboardResponse extends createZodDto(
+  LeaderboardResponseSchema,
+) {}

@@ -60,7 +60,6 @@ export const CreateItinerarySchema = z.object({
   description: z.string().optional(),
   region: z.string(),
   duration: z.string(),
-  duration_days: z.number().int().min(1),
   thumbnail_url: z.string().url().optional(),
   estimated_price_cents: z.number().int().optional(),
   currency: z.string().length(3).default("USD"),

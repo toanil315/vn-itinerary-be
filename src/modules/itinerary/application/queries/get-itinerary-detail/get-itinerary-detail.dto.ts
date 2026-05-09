@@ -1,5 +1,5 @@
-import { createZodDto } from 'nestjs-zod';
-import { z } from 'zod';
+import { createZodDto } from "nestjs-zod";
+import { z } from "zod";
 
 export const DetailAuthorSchema = z.object({
   displayName: z.string(),
@@ -55,8 +55,9 @@ export const ItineraryDetailSchema = z.object({
   likeCount: z.number(),
   createdAt: z.string(),
   tags: z.array(z.string()),
-  author: DetailAuthorSchema,
   days: z.array(DetailDaySchema),
 });
 
-export class ItineraryDetailResponse extends createZodDto(ItineraryDetailSchema) {}
+export class ItineraryDetailResponse extends createZodDto(
+  ItineraryDetailSchema,
+) {}
