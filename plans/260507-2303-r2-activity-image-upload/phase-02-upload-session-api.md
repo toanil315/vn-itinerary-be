@@ -1,5 +1,9 @@
 # Phase 02 — Upload reservation and confirmation API
 
+## Implementation Status
+
+- [x] Completed
+
 ## Overview
 
 Expose authenticated APIs for FE to reserve upload slots, receive signed URLs, and confirm completed uploads.

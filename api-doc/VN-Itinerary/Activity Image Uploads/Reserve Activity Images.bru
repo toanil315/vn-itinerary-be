@@ -1,0 +1,33 @@
+meta {
+  name: Reserve Activity Images
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/v1/activity-images/uploads/reserve
+  body: json
+  auth: bearer
+}
+
+headers {
+  x-idempotency-key: reserve-demo-001
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "activity_client_ref": "day1-activity1",
+    "files": [
+      {
+        "content_type": "image/jpeg",
+        "size_bytes": 524288,
+        "caption": "Sunset"
+      }
+    ]
+  }
+}
+

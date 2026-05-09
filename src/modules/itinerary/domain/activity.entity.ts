@@ -5,6 +5,32 @@ export enum SessionType {
   EVENING = 'evening',
 }
 
+export class ActivityImage {
+  constructor(
+    public readonly id: string,
+    public readonly objectKey: string,
+    public readonly url: string | null,
+    public readonly caption: string | null,
+    public readonly displayOrder: number,
+  ) {}
+
+  static create(props: {
+    id: string;
+    objectKey: string;
+    url?: string | null;
+    caption?: string | null;
+    displayOrder: number;
+  }): ActivityImage {
+    return new ActivityImage(
+      props.id,
+      props.objectKey,
+      props.url ?? null,
+      props.caption ?? null,
+      props.displayOrder,
+    );
+  }
+}
+
 export class Activity {
   constructor(
     public readonly id: string,
@@ -22,6 +48,7 @@ export class Activity {
     public readonly costDisplay: string | null,
     public readonly mapLink: string | null,
     public readonly categoryTag: string | null,
+    public readonly images: ActivityImage[] = [],
   ) {}
 
   static create(props: {
@@ -40,6 +67,7 @@ export class Activity {
     costDisplay?: string | null;
     mapLink?: string | null;
     categoryTag?: string | null;
+    images?: ActivityImage[];
   }): Activity {
     return new Activity(
       props.id,
@@ -57,6 +85,7 @@ export class Activity {
       props.costDisplay ?? null,
       props.mapLink ?? null,
       props.categoryTag ?? null,
+      props.images ?? [],
     );
   }
 }

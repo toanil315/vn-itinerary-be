@@ -1,5 +1,9 @@
 # Phase 03 — Itinerary payload extension for activity images
 
+## Implementation Status
+
+- [x] Completed
+
 ## Overview
 
 Extend create/update itinerary write model to accept optional `images` arrays on each activity and persist confirmed uploads to `activity_images`.

@@ -24,7 +24,10 @@ export class UpdateItineraryCommandHandler implements ICommandHandler<UpdateItin
       return Result.failure(ItineraryErrors.AlreadyPublished());
     }
 
-    await this.itineraryRepository.update(id, data);
+    await this.itineraryRepository.update(id, {
+      ...data,
+      userId,
+    });
 
     return Result.success(undefined);
   }

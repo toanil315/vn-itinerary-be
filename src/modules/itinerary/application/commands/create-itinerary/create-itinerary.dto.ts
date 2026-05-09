@@ -1,6 +1,36 @@
 import { createZodDto } from "nestjs-zod";
 import { z } from "zod";
 
+const ActivityImageSchema = z.object({
+  upload_id: z.string().uuid(),
+  caption: z.string().max(255).optional(),
+  display_order: z.number().int().min(0),
+});
+
+const ActivityImagesSchema = z
+  .array(ActivityImageSchema)
+  .max(5)
+  .superRefine((images, ctx) => {
+    const usedDisplayOrders = new Set<number>();
+    const usedUploadIds = new Set<string>();
+    for (const image of images) {
+      if (usedDisplayOrders.has(image.display_order)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "display_order must be unique per activity",
+        });
+      }
+      if (usedUploadIds.has(image.upload_id)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "upload_id must be unique per activity",
+        });
+      }
+      usedDisplayOrders.add(image.display_order);
+      usedUploadIds.add(image.upload_id);
+    }
+  });
+
 export const ActivitySchema = z.object({
   title: z.string().min(1).max(200),
   description: z.string().optional(),
@@ -15,6 +45,7 @@ export const ActivitySchema = z.object({
   cost_display: z.string().optional(),
   map_link: z.string().url().optional(),
   category_tag: z.string().optional(),
+  images: ActivityImagesSchema.optional(),
 });
 
 export const ItineraryDaySchema = z.object({

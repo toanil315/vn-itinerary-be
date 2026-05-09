@@ -1,5 +1,9 @@
 # Phase 01 — Storage foundation and R2 signer
 
+## Implementation Status
+
+- [x] Completed
+
 ## Overview
 
 Create R2 integration primitives and data model to safely issue signed upload URLs.

@@ -36,11 +36,11 @@ Implement direct browser upload to Cloudflare R2 using backend-generated signed 
 
 | # | Phase | Status | Effort | Link |
 |---|---|---|---|---|
-| 1 | Storage foundation and R2 signer | Pending | 3h | [phase-01](./phase-01-storage-foundation.md) |
-| 2 | Upload reservation and confirmation API | Pending | 3h | [phase-02](./phase-02-upload-session-api.md) |
-| 3 | Itinerary payload extension for activity images | Pending | 4h | [phase-03](./phase-03-itinerary-images-write-flow.md) |
-| 4 | Read model and response mapping for activity images | Pending | 2h | [phase-04](./phase-04-read-model-images.md) |
-| 5 | Hardening, limits, lifecycle, and QA | Pending | 2h | [phase-05](./phase-05-security-hardening-and-qa.md) |
+| 1 | Storage foundation and R2 signer | Completed | 3h | [phase-01](./phase-01-storage-foundation.md) |
+| 2 | Upload reservation and confirmation API | Completed | 3h | [phase-02](./phase-02-upload-session-api.md) |
+| 3 | Itinerary payload extension for activity images | Completed | 4h | [phase-03](./phase-03-itinerary-images-write-flow.md) |
+| 4 | Read model and response mapping for activity images | Completed | 2h | [phase-04](./phase-04-read-model-images.md) |
+| 5 | Hardening, limits, lifecycle, and QA | Completed | 2h | [phase-05](./phase-05-security-hardening-and-qa.md) |
 
 ## Dependencies
 

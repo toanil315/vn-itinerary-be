@@ -4,6 +4,7 @@ export const PermissionKeys = {
   ITINERARY_PUBLISH: 'itinerary:publish',
   ITINERARY_ARCHIVE: 'itinerary:archive',
   ITINERARY_LIST_OWN: 'itinerary:list-own',
+  ACTIVITY_IMAGE_UPLOAD: 'activity-image:upload',
   BOOKMARK_CREATE: 'bookmark:create',
   BOOKMARK_DELETE: 'bookmark:delete',
   BOOKMARK_LIST: 'bookmark:list',

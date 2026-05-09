@@ -6,10 +6,14 @@ import { Inject } from '@nestjs/common';
 import { DATABASE_TOKEN } from '@/common/database/database.provider';
 import type { Database } from '@/common/database/database';
 import { ItineraryErrors } from '../../../domain/itinerary.errors';
+import { ConfigService } from '@nestjs/config';
 
 @QueryHandler(GetItineraryDetailQuery)
 export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItineraryDetailQuery> {
-  constructor(@Inject(DATABASE_TOKEN) private readonly db: Database) {}
+  constructor(
+    @Inject(DATABASE_TOKEN) private readonly db: Database,
+    private readonly configService: ConfigService,
+  ) {}
 
   async execute(query: GetItineraryDetailQuery): Promise<Result<ItineraryDetailResponse>> {
     const { slug } = query;
@@ -61,6 +65,15 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
           .orderBy('order_index', 'asc')
           .execute()
       : [];
+    const activityIds = activities.map((activity) => activity.id);
+    const activityImages = activityIds.length > 0
+      ? await this.db
+          .selectFrom('activity_images')
+          .selectAll()
+          .where('activity_id', 'in', activityIds)
+          .orderBy('display_order', 'asc')
+          .execute()
+      : [];
 
     const tags = await this.db
       .selectFrom('itinerary_tags')
@@ -110,8 +123,26 @@ export class GetItineraryDetailQueryHandler implements IQueryHandler<GetItinerar
             costDisplay: a.cost_display,
             mapLink: a.map_link,
             categoryTag: a.category_tag,
+            images: activityImages
+              .filter((image) => image.activity_id === a.id)
+              .map((image) => ({
+                id: image.id,
+                objectKey: (image as any).object_key,
+                url: this.toImageUrl((image as any).object_key),
+                caption: image.caption,
+                displayOrder: image.display_order,
+              })),
           })),
       })),
     });
+  }
+
+  private toImageUrl(objectKey: string): string | null {
+    const publicBaseUrl = this.configService.get<string>('R2_PUBLIC_BASE_URL');
+    if (!publicBaseUrl) {
+      return null;
+    }
+
+    return `${publicBaseUrl.replace(/\/$/, '')}/${objectKey}`;
   }
 }

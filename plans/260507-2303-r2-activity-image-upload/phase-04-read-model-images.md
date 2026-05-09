@@ -1,5 +1,9 @@
 # Phase 04 — Read model and response mapping for activity images
 
+## Implementation Status
+
+- [x] Completed
+
 ## Overview
 
 Ensure itinerary detail/list projections expose activity images consistently after write-flow changes.

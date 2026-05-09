@@ -22,6 +22,15 @@ export const DetailActivitySchema = z.object({
   costDisplay: z.string().nullable(),
   mapLink: z.string().nullable(),
   categoryTag: z.string().nullable(),
+  images: z.array(
+    z.object({
+      id: z.string().uuid(),
+      objectKey: z.string(),
+      url: z.string().nullable(),
+      caption: z.string().nullable(),
+      displayOrder: z.number(),
+    }),
+  ),
 });
 
 export const DetailDaySchema = z.object({

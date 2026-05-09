@@ -36,7 +36,7 @@ export class ItineraryController {
     private readonly queryBus: QueryBus,
   ) {}
 
-  @ApiOperation({ summary: "Create Itinerary Draft" })
+  @ApiOperation({ summary: "Create Itinerary Draft (supports activities[].images[])" })
   @ApiResponse({
     description: "Itinerary draft created successfully",
     type: CreateItineraryResponseDto,
@@ -52,7 +52,7 @@ export class ItineraryController {
     );
   }
 
-  @ApiOperation({ summary: "Update Itinerary Draft" })
+  @ApiOperation({ summary: "Update Itinerary Draft (supports activities[].images[])" })
   @ApiResponse({
     description: "Itinerary draft updated successfully",
     type: EmptyResponse,

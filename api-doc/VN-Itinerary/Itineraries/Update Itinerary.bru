@@ -20,6 +20,30 @@ auth:bearer {
 
 body:json {
   {
-    "title": "Updated Trip Title"
+    "title": "Updated Trip Title",
+    "description": "Updated with images",
+    "region": "Da Nang",
+    "duration": "3 days",
+    "duration_days": 3,
+    "days": [
+      {
+        "day_number": 1,
+        "theme": "City Walk",
+        "order_index": 0,
+        "activities": [
+          {
+            "title": "Walk Han River",
+            "time_session": "afternoon",
+            "order_index": 0,
+            "images": [
+              {
+                "upload_id": "00000000-0000-0000-0000-000000000000",
+                "display_order": 0
+              }
+            ]
+          }
+        ]
+      }
+    ]
   }
 }

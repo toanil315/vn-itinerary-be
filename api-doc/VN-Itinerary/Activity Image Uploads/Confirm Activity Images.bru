@@ -1,0 +1,24 @@
+meta {
+  name: Confirm Activity Images
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/v1/activity-images/uploads/confirm
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "upload_ids": [
+      "00000000-0000-0000-0000-000000000000"
+    ]
+  }
+}
+
