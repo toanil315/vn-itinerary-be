@@ -17,14 +17,11 @@ import {
   RequirePermission,
   type AuthenticatedUser,
 } from "@/modules/auth/public";
-import { CreateItineraryDto } from "../application/commands/create-itinerary/create-itinerary.dto";
-import { CreateItineraryCommand } from "../application/commands/create-itinerary/create-itinerary.command";
 import { UpdateItineraryDto } from "../application/commands/update-itinerary/update-itinerary.dto";
 import { UpdateItineraryCommand } from "../application/commands/update-itinerary/update-itinerary.command";
 import { PublishItineraryCommand } from "../application/commands/publish-itinerary/publish-itinerary.command";
 import { ArchiveItineraryCommand } from "../application/commands/archive-itinerary/archive-itinerary.command";
 import { ListMyItinerariesQuery } from "../application/queries/list-my-itineraries/list-my-itineraries.query";
-import { CreateItineraryResponseDto } from "../application/commands/create-itinerary/create-itinerary.dto";
 import { ListMyItinerariesResponse } from "../application/queries/list-my-itineraries/list-my-itineraries.dto";
 
 @ApiTags("Itineraries")
